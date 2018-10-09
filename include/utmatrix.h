@@ -107,7 +107,7 @@ bool TVector<ValType>::operator==(const TVector &v) const
 	if (Size != v.Size)
 		return false;
 	for (int i = 0; i < Size; i++)
-		if (pVector[i - StartIndex] != v.pVector[i - StartIndex])
+		if (pVector[i] != v.pVector[i])
 			return false;
 	return true;
 
@@ -143,7 +143,7 @@ TVector<ValType> TVector<ValType>::operator+(const ValType &val)
 {
 	TVector<ValType> temp(*this);
 	for (int i = 0; i < Size; i++)
-		temp.pVector[i - StartIndex] += val;
+		temp.pVector[i] += val;
 	return temp;
 }
 
@@ -152,7 +152,7 @@ TVector<ValType> TVector<ValType>::operator-(const ValType &val)
 {
 	TVector<ValType> temp(*this);
 	for (int i = 0; i < Size; i++)
-		temp.pVector[i - StartIndex] -= val;
+		temp.pVector[i] -= val;
 	return temp;
 }
 
@@ -161,24 +161,54 @@ TVector<ValType> TVector<ValType>::operator*(const ValType &val)
 {
 	TVector<ValType> temp(*this);
 	for (int i = 0; i < Size; i++)
-		temp.pVector[i - StartIndex] *= val;
+		temp.pVector[i] *= val;
 	return temp;
 }
 
 template <class ValType> // сложение
 TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 {
-} /*-------------------------------------------------------------------------*/
+	if (Size == v.Size)
+	{
+		TVector<ValType> temp(*this);
+		for (int i = 0; i < Size; i++)
+			temp.pVector[i] += v.pVector[i];
+		return temp;
+	}
+	else
+	{
+		exception exp("not equal size!");
+			throw exp;
+	}
+}
 
 template <class ValType> // вычитание
 TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 {
-} /*-------------------------------------------------------------------------*/
+	if (Size == v.Size)
+	{
+		TVector<ValType> temp(*this);
+		for (int i = 0; i < Size; i++)
+			temp.pVector[i] -= v.pVector[i];
+		return temp;
+	}
+	exception exp("not equal size!");
+	throw exp;
+} 
 
 template <class ValType> // скалярное произведение
 ValType TVector<ValType>::operator*(const TVector<ValType> &v)
 {
-} /*-------------------------------------------------------------------------*/
+	if (Size == v.Size)
+	{
+		ValType result;
+		for (int i = 0; i < Size; i++)
+			result += pVector[i] * v.pVector[i];
+		return result;
+	}
+	exception exp("not equal size!");
+	throw exp;
+}
 
 
 // Верхнетреугольная матрица
