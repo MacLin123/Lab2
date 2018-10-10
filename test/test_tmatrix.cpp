@@ -1,4 +1,4 @@
-#include "utmatrix.h"
+#include "../include/utmatrix.h"
 
 #include <gtest/gtest.h>
 
@@ -26,37 +26,46 @@ TEST(TMatrix, can_create_copied_matrix)
 
 TEST(TMatrix, copied_matrix_is_equal_to_source_one)
 {
-  ADD_FAILURE();
+	TMatrix<int> source(5);
+	source[0][0] = 12;
+	TMatrix<int> copiedM(source);
+	EXPECT_EQ(copiedM, source);
 }
 
 TEST(TMatrix, copied_matrix_has_its_own_memory)
 {
-  ADD_FAILURE();
+	TMatrix<int> source(5);
+	TMatrix<int> copiedM(source);
+	EXPECT_NE(&source, &copiedM);
 }
 
 TEST(TMatrix, can_get_size)
 {
-  ADD_FAILURE();
+	TMatrix<int> m(10);
+	EXPECT_EQ(10, m.GetSize());
 }
 
 TEST(TMatrix, can_set_and_get_element)
 {
-  ADD_FAILURE();
+	TMatrix<int> m(10);
+	m[0][0] = 33;
+	EXPECT_EQ(33, m[0][0]);
 }
 
 TEST(TMatrix, throws_when_set_element_with_negative_index)
 {
-  ADD_FAILURE();
+	ASSERT_ANY_THROW(TMatrix<int> m(-4));
 }
 
 TEST(TMatrix, throws_when_set_element_with_too_large_index)
 {
-  ADD_FAILURE();
+	ASSERT_ANY_THROW(TMatrix<int> m(MAX_MATRIX_SIZE + 1));
 }
 
 TEST(TMatrix, can_assign_matrix_to_itself)
 {
-  ADD_FAILURE();
+	TMatrix<int> m(10);
+	ASSERT_NO_THROW(m = m);
 }
 
 TEST(TMatrix, can_assign_matrices_of_equal_size)

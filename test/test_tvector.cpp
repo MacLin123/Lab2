@@ -1,4 +1,4 @@
-#include "utmatrix.h"
+#include "../include/utmatrix.h"
 
 #include <gtest/gtest.h>
 
@@ -31,7 +31,10 @@ TEST(TVector, can_create_copied_vector)
 
 TEST(TVector, copied_vector_is_equal_to_source_one)
 {
-  ADD_FAILURE();
+	TVector<int> v(10);
+	v[4] = 12;
+	TVector<int>v2(v);
+	EXPECT_EQ(v2, v);
 }
 
 TEST(TVector, copied_vector_has_its_own_memory)

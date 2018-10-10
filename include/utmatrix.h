@@ -67,7 +67,11 @@ TVector<ValType>::TVector(int s, int si)
 		bad_alloc exp;
 		throw exp;
 	}
-	else
+	if (si < 0)
+	{
+		out_of_range exp("Start index is negative");
+		throw exp;
+	}
 	pVector = new ValType[s];
 	Size = s;
 	StartIndex = si;
@@ -92,9 +96,9 @@ TVector<ValType>::~TVector()
 template <class ValType> // доступ
 ValType& TVector<ValType>::operator[](int pos)
 {
-	if (pos < 0 || pos > Size)
+	if (pos < 0 || pos - StartIndex > Size)
 	{
-		out_of_range exp("index ssout of range");
+		out_of_range exp("index out of range");
 		throw exp;
 	}
 	else
@@ -170,9 +174,9 @@ TVector<ValType> TVector<ValType>::operator+(const TVector<ValType> &v)
 {
 	if (Size == v.Size)
 	{
-		TVector<ValType> temp(*this);
+		TVector<ValType> temp(Size,StartIndex);
 		for (int i = 0; i < Size; i++)
-			temp.pVector[i] += v.pVector[i];
+			temp.pVector[i] = pVector[i] + v.pVector[i];
 		return temp;
 	}
 	else
@@ -187,9 +191,9 @@ TVector<ValType> TVector<ValType>::operator-(const TVector<ValType> &v)
 {
 	if (Size == v.Size)
 	{
-		TVector<ValType> temp(*this);
+		TVector<ValType> temp(Size,StartIndex);
 		for (int i = 0; i < Size; i++)
-			temp.pVector[i] -= v.pVector[i];
+			temp.pVector[i] = pVector[i] - v.pVector[i];
 		return temp;
 	}
 	exception exp("not equal size!");
@@ -243,8 +247,13 @@ public:
 template <class ValType>
 TMatrix<ValType>::TMatrix(int s): TVector<TVector<ValType> >(s)
 {
-	for (int i = 0; i < this->Size; i++)
-		this->pVector[i] = TVector<ValType>(this->Size - i, i);
+	if (s > MAX_MATRIX_SIZE || s < 0)
+	{
+		bad_alloc exp;
+		throw exp;
+	}
+	for (int i = 0; i < s; i++)
+		this->pVector[i] = TVector<ValType>(s - i, i);
 }
 
 template <class ValType> // конструктор копирования
@@ -291,6 +300,7 @@ TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
 		TVector<TVector<ValType>> temp(this->Size);
 		for (int i = 0; i < this->Size; i++)
 			temp[i] = this->pVector[i] + mt.pVector[i];
+		return temp;
 	}
 	exception exp("not equal size!");
 	throw exp;
@@ -300,6 +310,14 @@ TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
 template <class ValType> // вычитание
 TMatrix<ValType> TMatrix<ValType>::operator-(const TMatrix<ValType> &mt)
 {
+	if (this->Size == mt.Size)
+	{
+		TVector<TVector<ValType>> temp(this->Size);
+		for (int i = 0; i < this->Size; i++)
+			temp[i] = this->pVector[i] - mt.pVector[i];
+	}
+	exception exp("not equal size!");
+	throw exp;
 } /*-------------------------------------------------------------------------*/
 
 // TVector О3 Л2 П4 С6
