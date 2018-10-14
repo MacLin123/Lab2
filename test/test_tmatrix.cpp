@@ -67,7 +67,7 @@ TEST(TMatrix, can_assign_matrix_to_itself)
 	TMatrix<int> m(10);
 	m[0] = 321;
 	m = m;
-	EXPECT_EQ(m , m);
+	EXPECT_EQ(m, m);
 }
 
 TEST(TMatrix, can_assign_matrices_of_equal_size)

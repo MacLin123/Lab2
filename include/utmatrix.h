@@ -67,7 +67,7 @@ TVector<ValType>::TVector(int s, int si)
 		bad_alloc exp;
 		throw exp;
 	}
-	if ((si < 0) ||(si> MAX_VECTOR_SIZE))
+	if ((si < 0) || (si > MAX_VECTOR_SIZE))
 	{
 		out_of_range exp("Start index is negative");
 		throw exp;

@@ -91,7 +91,7 @@ TEST(TVector, can_assign_vectors_of_equal_size)
 	TVector<int> v2(10);
 	v[0] = 32;
 	v2 = v;
-	EXPECT_EQ(v2,v);
+	EXPECT_EQ(v2, v);
 }
 
 TEST(TVector, assign_operator_change_vector_size)
@@ -132,7 +132,7 @@ TEST(TVector, vectors_with_different_size_are_not_equal)
 	v[0] = 32;
 	TVector<int> v2(4);
 	v2[0] = 32;
-	EXPECT_EQ(1,v != v2);
+	EXPECT_EQ(1, v != v2);
 }
 
 TEST(TVector, can_add_scalar_to_vector)
