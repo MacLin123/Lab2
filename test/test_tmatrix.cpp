@@ -89,41 +89,75 @@ TEST(TMatrix, assign_operator_change_matrix_size)
 
 TEST(TMatrix, can_assign_matrices_of_different_size)
 {
-	ADD_FAILURE();
+	TMatrix<int> m(4);
+	TMatrix<int> m2(7);
+	m[0][0] = 32;
+	m2 = m;
+	EXPECT_EQ(m2, m);
 }
 
 TEST(TMatrix, compare_equal_matrices_return_true)
 {
-	ADD_FAILURE();
+	TMatrix<int> m(4);
+	TMatrix<int> m2(4);
+	m[0][0] = 32;
+	m2 = m;
+	EXPECT_EQ(1, m2 == m);
 }
 
 TEST(TMatrix, compare_matrix_with_itself_return_true)
 {
-	ADD_FAILURE();
+	TMatrix<int> m(4);
+	m[0][0] = 32;
+	EXPECT_EQ(1, m == m);
 }
 
 TEST(TMatrix, matrices_with_different_size_are_not_equal)
 {
-	ADD_FAILURE();
+	TMatrix<int> m(4);
+	TMatrix<int> m2(7);
+	m[0][0] = 32;
+	m2[0][0] = 32;
+	EXPECT_EQ(1, m2 != m);
 }
 
 TEST(TMatrix, can_add_matrices_with_equal_size)
 {
-	ADD_FAILURE();
+	TMatrix<int> m(4);
+	TMatrix<int> m2(4);
+	TMatrix<int> m3(4);
+	m[0][0] = 32;
+	m2[0][0] = 32;
+	m3[0][0] = 64;
+	EXPECT_EQ(m3, m + m2);
 }
 
 TEST(TMatrix, cant_add_matrices_with_not_equal_size)
 {
-	ADD_FAILURE();
+	TMatrix<int> m(4);
+	TMatrix<int> m2(7);
+	m[0][0] = 32;
+	m2[0][0] = 32;
+	EXPECT_ANY_THROW(m2 + m);
 }
 
 TEST(TMatrix, can_subtract_matrices_with_equal_size)
 {
-	ADD_FAILURE();
+	TMatrix<int> m(4);
+	TMatrix<int> m2(4);
+	TMatrix<int> m3(4);
+	m[0][0] = 128;
+	m2[0][0] = 64;
+	m3[0][0] = 64;
+	EXPECT_EQ(m3, m - m2);
 }
 
 TEST(TMatrix, cant_subtract_matrixes_with_not_equal_size)
 {
-	ADD_FAILURE();
+	TMatrix<int> m(4);
+	TMatrix<int> m2(7);
+	m[0][0] = 32;
+	m2[0][0] = 44;
+	EXPECT_ANY_THROW(m2 - m);
 }
 

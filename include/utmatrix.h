@@ -304,29 +304,13 @@ TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType> &mt)
 template <class ValType> // сложение
 TMatrix<ValType> TMatrix<ValType>::operator+(const TMatrix<ValType> &mt)
 {
-	if (this->Size == mt.Size)
-	{
-		TVector<TVector<ValType>> temp(this->Size);
-		for (int i = 0; i < this->Size; i++)
-			temp[i] = this->pVector[i] + mt.pVector[i];
-		return temp;
-	}
-	exception exp("not equal size!");
-	throw exp;
-
+	return TVector<TVector<ValType>>::operator+(mt);
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // вычитание
 TMatrix<ValType> TMatrix<ValType>::operator-(const TMatrix<ValType> &mt)
 {
-	if (this->Size == mt.Size)
-	{
-		TVector<TVector<ValType>> temp(this->Size);
-		for (int i = 0; i < this->Size; i++)
-			temp[i] = this->pVector[i] - mt.pVector[i];
-	}
-	exception exp("not equal size!");
-	throw exp;
+	return TVector<TVector<ValType>>::operator-(mt);
 } /*-------------------------------------------------------------------------*/
 
 // TVector О3 Л2 П4 С6
